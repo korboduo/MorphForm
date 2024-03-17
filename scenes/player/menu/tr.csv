@@ -1,0 +1,19 @@
+key,en,ru
+FACING_WALL,Unable,Невозожно
+HINT_SHIFT,Сhange shape,Изменить форму
+HINT_JUMP,Jump,Прыжок
+HINT_PICK,Pick up / Throw,Взять / Бросить
+BUTTON_QUIT,Exit,Выйти
+BUTTON_PLAY,Play,Играть
+SETTING_SENS,Sensetivity,Чувствительность
+SETTING_VS,VSync,Вертикальная синхронизация
+SETTING_FULLSCREEN,Full Screen,Полный экран
+SETTING_VOL,Volume,Громкость
+SETTING_LANG,Language,Язык
+HINT_ZOOM,Zoom,Приблизить
+BUTTON_SETTINGS,Settings,Настройки
+BUTTON_BACK,Back,Назад
+SETTING_REFLECTION,Reflections,Отражения
+HINT_RESET,Return object,Вернуть объект
+LABEL_END,End,Конец
+BUTTON_RESTART,Restart,Перезагрузить

@@ -1,0 +1,129 @@
+[gd_scene load_steps=12 format=3 uid="uid://dmrweyetwpr1w"]
+
+[ext_resource type="Script" path="res://scenes/level/button_shifter.gd" id="1_sj7q8"]
+[ext_resource type="AudioStream" uid="uid://cucv4ri311i6o" path="res://sound/Electromagnetic_Speaker_Loop_Mono_Elektrousi.wav" id="2_wddir"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qg7ea"]
+size = Vector3(1.3, 1.5, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2agb"]
+size = Vector3(0.5, 0.05, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tmjbc"]
+size = Vector3(1.9, 0.1, 1.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4te1s"]
+size = Vector3(1.6, 0.05, 1.7)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gm7db"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2sacv"]
+as_normal_map = true
+bump_strength = 2.0
+noise = SubResource("FastNoiseLite_gm7db")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5xgl"]
+albedo_color = Color(1, 0, 0, 1)
+roughness = 0.4
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_2sacv")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_c6x1r"]
+size = Vector3(1.6, 0.05, 1.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dpb2u"]
+size = Vector3(2, 0.1, 2)
+
+[node name="button" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.199714, 0)
+collision_layer = 0
+collision_mask = 4
+monitoring = false
+monitorable = false
+gravity_space_override = 3
+linear_damp_space_override = 3
+linear_damp = 4.0
+script = ExtResource("1_sj7q8")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_qg7ea")
+
+[node name="slider" type="JoltSliderJoint3D" parent="."]
+limit_enabled = true
+limit_upper = 0.3
+limit_lower = 0.175
+limit_spring_enabled = true
+limit_spring_frequency = 1.5
+limit_spring_damping = 1.25
+node_a = NodePath("../platform")
+node_b = NodePath("../buttonPhys")
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.150286, 0)
+
+[node name="checker" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="coll" type="CollisionShape3D" parent="checker"]
+shape = SubResource("BoxShape3D_r2agb")
+
+[node name="platform" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00028573, 0)
+collision_layer = 0
+collision_mask = 0
+
+[node name="collision" type="CollisionShape3D" parent="platform"]
+shape = SubResource("BoxShape3D_tmjbc")
+
+[node name="buttonPhys" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.199714, 0)
+collision_layer = 4
+collision_mask = 4
+max_contacts_reported = 1
+contact_monitor = true
+
+[node name="coll" type="CollisionShape3D" parent="buttonPhys"]
+shape = SubResource("BoxShape3D_4te1s")
+
+[node name="mesh" type="MeshInstance3D" parent="buttonPhys"]
+material_override = SubResource("StandardMaterial3D_r5xgl")
+mesh = SubResource("BoxMesh_c6x1r")
+skeleton = NodePath("../../platform")
+
+[node name="floor" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="collision" type="CollisionShape3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0.05)
+shape = SubResource("BoxShape3D_dpb2u")
+
+[node name="audio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_wddir")
+volume_db = -10.0
+unit_size = 7.0
+autoplay = true
+bus = &"SFX"
+
+[node name="bulb" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+light_color = Color(1, 0, 0, 1)
+light_bake_mode = 1
+omni_range = 1.0
+
+[node name="spot" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.95, 0)
+light_color = Color(0, 1, 1, 1)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 6.0
+spot_attenuation = 0.2
+spot_angle = 25.0
+spot_angle_attenuation = 1.75
+
+[connection signal="body_entered" from="checker" to="." method="_on_checker_body_entered"]
+[connection signal="body_exited" from="checker" to="." method="_on_checker_body_exited"]
+[connection signal="body_entered" from="buttonPhys" to="." method="_on_button_phys_body_entered"]
+[connection signal="body_exited" from="buttonPhys" to="." method="_on_button_phys_body_exited"]

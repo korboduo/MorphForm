@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c4ekvafnfx45o"
+
+[deps]
+
+files=["res://scenes/player/menu/tr.en.translation", "res://scenes/player/menu/tr.ru.translation"]
+
+source_file="res://scenes/player/menu/tr.csv"
+dest_files=["res://scenes/player/menu/tr.en.translation", "res://scenes/player/menu/tr.ru.translation"]
+
+[params]
+
+compress=true
+delimiter=0

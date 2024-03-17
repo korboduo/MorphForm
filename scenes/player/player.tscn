@@ -1,0 +1,221 @@
+[gd_scene load_steps=24 format=3 uid="uid://r0kteau6xsf1"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_hjbqw"]
+[ext_resource type="Script" path="res://scenes/player/grab.gd" id="2_54g67"]
+[ext_resource type="AudioStream" uid="uid://de0ryw0004yt2" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_01.wav" id="4_qomam"]
+[ext_resource type="AudioStream" uid="uid://drssmngcga353" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_02.wav" id="5_vqn2r"]
+[ext_resource type="Script" path="res://scenes/player/footAudio.gd" id="6_56jn5"]
+[ext_resource type="AudioStream" uid="uid://cypplhlkt0hu3" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_03.wav" id="6_r61en"]
+[ext_resource type="AudioStream" uid="uid://d0j66k2uhkdtf" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_04.wav" id="7_d31t6"]
+[ext_resource type="AudioStream" uid="uid://d3e6fex5xhdlk" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_05.wav" id="8_audio"]
+[ext_resource type="AudioStream" uid="uid://d37wnk0xcukt2" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_06.wav" id="9_iv62f"]
+[ext_resource type="AudioStream" uid="uid://b500t2h8q37s5" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_07.wav" id="10_qkqt8"]
+[ext_resource type="AudioStream" uid="uid://pdwk2vcjogac" path="res://sound/Footsteps_Tile_Walk/Footsteps_Tile_Walk_08.wav" id="11_5wwvo"]
+[ext_resource type="FontFile" uid="uid://mguppx3h51lc" path="res://scenes/player/menu/montserrat/Montserrat-SemiBoldItalic.ttf" id="12_057ui"]
+[ext_resource type="Script" path="res://scenes/player/hud.gd" id="13_pdf42"]
+[ext_resource type="Texture2D" uid="uid://cmxxv733v48i0" path="res://scenes/player/hud/keyboard_space_outline.svg" id="15_uoukb"]
+[ext_resource type="Texture2D" uid="uid://cnv5mb220pt8m" path="res://scenes/player/hud/mouse_left_outline.svg" id="16_138w4"]
+[ext_resource type="Texture2D" uid="uid://dv3tqo88idq3a" path="res://scenes/player/hud/mouse_right_outline.svg" id="17_8cw4k"]
+[ext_resource type="Texture2D" uid="uid://b3s82mo034dpe" path="res://scenes/player/hud/keyboard_r_outline.svg" id="17_yo1tj"]
+[ext_resource type="Texture2D" uid="uid://omalw0j8nilj" path="res://scenes/player/hud/keyboard_2_outline.svg" id="18_kelh6"]
+[ext_resource type="Texture2D" uid="uid://b4it6tfk7u6mx" path="res://scenes/player/hud/keyboard_1_outline.svg" id="18_wabwc"]
+[ext_resource type="Texture2D" uid="uid://cholg68nkgi02" path="res://scenes/player/hud/keyboard_3_outline.svg" id="19_aduc1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lkve2"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8ccj3"]
+streams_count = 8
+stream_0/stream = ExtResource("4_qomam")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_vqn2r")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_r61en")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("7_d31t6")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("8_audio")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("9_iv62f")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("10_qkqt8")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("11_5wwvo")
+stream_7/weight = 1.0
+
+[sub_resource type="Theme" id="Theme_11316"]
+default_font = ExtResource("12_057ui")
+default_font_size = 34
+Label/colors/font_color = Color(1, 0.180392, 0.180392, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.0823529)
+
+[node name="player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_hjbqw")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_lkve2")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62, 0)
+
+[node name="eyes" type="Camera3D" parent="head"]
+
+[node name="grabRay" type="RayCast3D" parent="head/eyes"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -3)
+collision_mask = 5
+
+[node name="grabPoint" type="Marker3D" parent="head/eyes"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, -2.5)
+
+[node name="grab" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_54g67")
+
+[node name="footAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+stream = SubResource("AudioStreamRandomizer_8ccj3")
+volume_db = -25.0
+bus = &"SFX"
+attenuation_filter_cutoff_hz = 20500.0
+script = ExtResource("6_56jn5")
+
+[node name="footTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="hud" type="MarginContainer" parent="."]
+process_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_11316")
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+script = ExtResource("13_pdf42")
+
+[node name="jump" type="HSplitContainer" parent="hud"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+collapsed = true
+
+[node name="texture" type="TextureRect" parent="hud/jump"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("15_uoukb")
+stretch_mode = 5
+
+[node name="label" type="Label" parent="hud/jump"]
+layout_mode = 2
+text = "HINT_JUMP"
+
+[node name="pick" type="HSplitContainer" parent="hud"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+collapsed = true
+
+[node name="texture" type="TextureRect" parent="hud/pick"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("16_138w4")
+stretch_mode = 5
+
+[node name="label" type="Label" parent="hud/pick"]
+layout_mode = 2
+text = "HINT_PICK"
+
+[node name="reset" type="HSplitContainer" parent="hud"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+collapsed = true
+
+[node name="texture" type="TextureRect" parent="hud/reset"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("17_yo1tj")
+stretch_mode = 5
+
+[node name="label" type="Label" parent="hud/reset"]
+layout_mode = 2
+text = "HINT_RESET"
+
+[node name="shift" type="HBoxContainer" parent="hud"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="texture" type="TextureRect" parent="hud/shift"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("18_wabwc")
+stretch_mode = 5
+
+[node name="texture2" type="TextureRect" parent="hud/shift"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("18_kelh6")
+stretch_mode = 5
+
+[node name="texture3" type="TextureRect" parent="hud/shift"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("19_aduc1")
+stretch_mode = 5
+
+[node name="label" type="Label" parent="hud/shift"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "HINT_SHIFT"
+vertical_alignment = 1
+
+[node name="zoom" type="HSplitContainer" parent="hud"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+collapsed = true
+
+[node name="texture" type="TextureRect" parent="hud/zoom"]
+modulate = Color(1, 0.180392, 0.180392, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("17_8cw4k")
+stretch_mode = 5
+
+[node name="label" type="Label" parent="hud/zoom"]
+layout_mode = 2
+text = "HINT_ZOOM"
+
+[node name="facing" type="Label" parent="hud"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "FACING_WALL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="footTimer" to="footAudio" method="_on_foot_timer_timeout"]

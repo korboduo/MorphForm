@@ -1,0 +1,77 @@
+[gd_scene load_steps=15 format=3 uid="uid://d0grj6otiynch"]
+
+[ext_resource type="Script" path="res://scenes/shifter/shifter.gd" id="1_l2f8n"]
+[ext_resource type="Resource" uid="uid://bjt21qvoq0sfj" path="res://scenes/shifter/shapes/box_res.tres" id="2_76tsv"]
+[ext_resource type="Script" path="res://scenes/shifter/shapes/forms.gd" id="2_cbaxb"]
+[ext_resource type="Resource" uid="uid://cudylfkg3yxwv" path="res://scenes/shifter/shapes/ball_res.tres" id="3_s47np"]
+[ext_resource type="Texture2D" uid="uid://bcyjw14p1xsru" path="res://textures/rubber/rubber_tiles_diff_1k.jpg" id="5_j3b8w"]
+[ext_resource type="Shader" path="res://scenes/shifter/outline.gdshader" id="6_hn4aj"]
+[ext_resource type="Texture2D" uid="uid://8iqodngj4ht8" path="res://textures/rubber/rubber_tiles_nor_gl_1k.jpg" id="7_8mf5a"]
+[ext_resource type="Texture2D" uid="uid://exjvabkc0cl0" path="res://textures/rubber/rubber_tiles_rough_1k.jpg" id="8_e0f2r"]
+[ext_resource type="AudioStream" uid="uid://bvewgt0tnudwf" path="res://sound/rubber.wav" id="9_yeob7"]
+
+[sub_resource type="Resource" id="Resource_m84b2"]
+script = ExtResource("2_cbaxb")
+collision_shape = "res://scenes/shifter/shapes/coll_plate.tres"
+mesh_shape = "res://scenes/shifter/shapes/mesh_plate.tres"
+physics = "res://scenes/shifter/shapes/phys_plate.tres"
+mass = 0.25
+
+[sub_resource type="Shader" id="Shader_rm8wi"]
+code = "shader_type spatial;
+render_mode unshaded,depth_test_disabled;
+uniform vec4 albedo : source_color;
+void fragment() {
+	ALBEDO = albedo.rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahph6"]
+render_priority = -1
+shader = SubResource("Shader_rm8wi")
+shader_parameter/albedo = Color(1, 0.211765, 0.211765, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d3pcv"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_hn4aj")
+shader_parameter/outline_color = Color(0, 0.803922, 0.913725, 1)
+shader_parameter/outline_width = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkdf1"]
+resource_local_to_scene = true
+next_pass = SubResource("ShaderMaterial_d3pcv")
+transparency = 4
+albedo_texture = ExtResource("5_j3b8w")
+roughness_texture = ExtResource("8_e0f2r")
+roughness_texture_channel = 4
+emission = Color(1, 1, 1, 1)
+normal_enabled = true
+normal_texture = ExtResource("7_8mf5a")
+uv1_triplanar = true
+
+[node name="shifter" type="RigidBody3D" groups=["shifter"]]
+collision_layer = 6
+collision_mask = 5
+continuous_cd = true
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_l2f8n")
+shift_forms = Array[ExtResource("2_cbaxb")]([ExtResource("2_76tsv"), ExtResource("3_s47np"), SubResource("Resource_m84b2")])
+
+[node name="collision" type="CollisionShape3D" parent="."]
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_ahph6")
+material_overlay = SubResource("StandardMaterial3D_wkdf1")
+
+[node name="cooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_yeob7")
+volume_db = -30.0
+unit_size = 20.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="forms" load_steps=2 format=3 uid="uid://cudylfkg3yxwv"]
+
+[ext_resource type="Script" path="res://scenes/shifter/shapes/forms.gd" id="1_ummnn"]
+
+[resource]
+script = ExtResource("1_ummnn")
+collision_shape = "res://scenes/shifter/shapes/coll_ball.tres"
+mesh_shape = "res://scenes/shifter/shapes/mesh_ball.tres"
+physics = "res://scenes/shifter/shapes/phys_ball.tres"
+mass = 0.5

@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://ssgs4far8mk6"]
+
+[ext_resource type="FontFile" uid="uid://c2q60oonf177o" path="res://scenes/player/menu/montserrat/Montserrat-MediumItalic.ttf" id="1_7rpqe"]
+[ext_resource type="FontFile" uid="uid://b3rpmbfdp5qv6" path="res://scenes/player/menu/montserrat/Montserrat-Italic.ttf" id="2_iv4bd"]
+[ext_resource type="Texture2D" uid="uid://4lvb0ohm0arg" path="res://scenes/player/menu/logo.svg" id="3_nswld"]
+[ext_resource type="Script" path="res://scenes/player/menu/end.gd" id="3_op3i2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rmhn5"]
+bg_color = Color(1, 1, 1, 0.196078)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ve8sa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onu6p"]
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.243137, 0.811765, 0.8, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tutkk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_on8ye"]
+
+[sub_resource type="Theme" id="Theme_8n38r"]
+default_font = ExtResource("2_iv4bd")
+default_font_size = 32
+Button/colors/font_color = Color(1, 0.278431, 0.278431, 1)
+Button/colors/font_focus_color = Color(0.243137, 0.811765, 0.8, 1)
+Button/colors/font_hover_color = Color(1, 0.278431, 0.278431, 1)
+Button/colors/font_hover_pressed_color = Color(0.243137, 0.811765, 0.8, 1)
+Button/colors/font_pressed_color = Color(0.243137, 0.811765, 0.8, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_rmhn5")
+Button/styles/focus = SubResource("StyleBoxEmpty_ve8sa")
+Button/styles/hover = SubResource("StyleBoxFlat_onu6p")
+Button/styles/normal = SubResource("StyleBoxEmpty_tutkk")
+Button/styles/pressed = SubResource("StyleBoxEmpty_on8ye")
+Label/colors/font_color = Color(1, 0.278431, 0.278431, 1)
+Label/fonts/font = ExtResource("1_7rpqe")
+OptionButton/colors/font_color = Color(0.180392, 0.180392, 0.180392, 1)
+OptionButton/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+OptionButton/colors/font_focus_color = Color(0.180392, 0.180392, 0.180392, 1)
+OptionButton/colors/font_hover_color = Color(0.282353, 0.282353, 0.282353, 1)
+OptionButton/colors/font_hover_pressed_color = Color(0.341176, 0.341176, 0.341176, 1)
+OptionButton/colors/font_outline_color = Color(1, 1, 1, 1)
+OptionButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+
+[node name="End" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_8n38r")
+script = ExtResource("3_op3i2")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -22.0
+offset_right = 99.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="label" type="Label" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "LABEL_END"
+horizontal_alignment = 1
+
+[node name="logo" type="TextureRect" parent="vb"]
+layout_mode = 2
+texture = ExtResource("3_nswld")
+
+[node name="restart" type="Button" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "BUTTON_RESTART"
+
+[node name="quit" type="Button" parent="vb"]
+layout_mode = 2
+text = "BUTTON_QUIT"
+
+[connection signal="button_down" from="vb/restart" to="." method="_on_restart_button_down"]
+[connection signal="button_up" from="vb/quit" to="." method="_on_quit_button_up"]

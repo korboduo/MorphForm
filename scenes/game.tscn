@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4t1vijw4la00"]
+
+[ext_resource type="PackedScene" uid="uid://bqvklnaq3onb8" path="res://scenes/level/level_0.tscn" id="1_oe4av"]
+[ext_resource type="PackedScene" uid="uid://r0kteau6xsf1" path="res://scenes/player/player.tscn" id="2_4h2d2"]
+[ext_resource type="PackedScene" uid="uid://cw45cni70skch" path="res://scenes/player/menu/menu.tscn" id="3_c6exi"]
+
+[node name="game" type="Node"]
+
+[node name="level_0" parent="." instance=ExtResource("1_oe4av")]
+
+[node name="player" parent="." instance=ExtResource("2_4h2d2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 17)
+
+[node name="menu" parent="." instance=ExtResource("3_c6exi")]
+
+[node name="goto" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -11, -8)

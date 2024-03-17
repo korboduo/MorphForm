@@ -1,0 +1,221 @@
+[gd_scene load_steps=14 format=3 uid="uid://cw45cni70skch"]
+
+[ext_resource type="Shader" path="res://scenes/player/menu/blur.gdshader" id="1_lsfe5"]
+[ext_resource type="FontFile" uid="uid://c2q60oonf177o" path="res://scenes/player/menu/montserrat/Montserrat-MediumItalic.ttf" id="2_lorkc"]
+[ext_resource type="FontFile" uid="uid://b3rpmbfdp5qv6" path="res://scenes/player/menu/montserrat/Montserrat-Italic.ttf" id="3_4668c"]
+[ext_resource type="Script" path="res://scenes/player/menu/menu.gd" id="4_xiius"]
+[ext_resource type="Texture2D" uid="uid://4lvb0ohm0arg" path="res://scenes/player/menu/logo.svg" id="5_svowd"]
+[ext_resource type="Texture2D" uid="uid://c46nkxdkem0cl" path="res://scenes/boot.png" id="6_1ae8h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rvi4v"]
+shader = ExtResource("1_lsfe5")
+shader_parameter/blur_amount = 2.0
+shader_parameter/mix_amount = 0.5
+shader_parameter/color_over = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rmhn5"]
+bg_color = Color(1, 1, 1, 0.196078)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ve8sa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onu6p"]
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.243137, 0.811765, 0.8, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tutkk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_on8ye"]
+
+[sub_resource type="Theme" id="Theme_iyou6"]
+default_font = ExtResource("3_4668c")
+default_font_size = 32
+Button/colors/font_color = Color(1, 0.278431, 0.278431, 1)
+Button/colors/font_focus_color = Color(0.243137, 0.811765, 0.8, 1)
+Button/colors/font_hover_color = Color(1, 0.278431, 0.278431, 1)
+Button/colors/font_hover_pressed_color = Color(0.243137, 0.811765, 0.8, 1)
+Button/colors/font_pressed_color = Color(0.243137, 0.811765, 0.8, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_rmhn5")
+Button/styles/focus = SubResource("StyleBoxEmpty_ve8sa")
+Button/styles/hover = SubResource("StyleBoxFlat_onu6p")
+Button/styles/normal = SubResource("StyleBoxEmpty_tutkk")
+Button/styles/pressed = SubResource("StyleBoxEmpty_on8ye")
+Label/colors/font_color = Color(1, 0.278431, 0.278431, 1)
+Label/fonts/font = ExtResource("2_lorkc")
+OptionButton/colors/font_color = Color(0.180392, 0.180392, 0.180392, 1)
+OptionButton/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+OptionButton/colors/font_focus_color = Color(0.180392, 0.180392, 0.180392, 1)
+OptionButton/colors/font_hover_color = Color(0.282353, 0.282353, 0.282353, 1)
+OptionButton/colors/font_hover_pressed_color = Color(0.341176, 0.341176, 0.341176, 1)
+OptionButton/colors/font_outline_color = Color(1, 1, 1, 1)
+OptionButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+
+[node name="menu" type="ColorRect"]
+process_mode = 3
+material = SubResource("ShaderMaterial_rvi4v")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_iyou6")
+script = ExtResource("4_xiius")
+
+[node name="m" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="main" type="VBoxContainer" parent="m"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="logo" type="TextureRect" parent="m/main"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("5_svowd")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="play" type="Button" parent="m/main"]
+layout_mode = 2
+text = "BUTTON_PLAY"
+
+[node name="settings" type="Button" parent="m/main"]
+layout_mode = 2
+text = "BUTTON_SETTINGS"
+
+[node name="quit" type="Button" parent="m/main"]
+layout_mode = 2
+text = "BUTTON_QUIT"
+
+[node name="settings" type="GridContainer" parent="m"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 35
+theme_override_constants/v_separation = 25
+columns = 2
+
+[node name="sens_label" type="Label" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SETTING_SENS"
+
+[node name="sens_slider" type="HSlider" parent="m/settings"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+min_value = 1.0
+max_value = 20.0
+value = 10.0
+
+[node name="vol_label" type="Label" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SETTING_VOL"
+
+[node name="vol_slider" type="HSlider" parent="m/settings"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="vs_label" type="Label" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SETTING_VS"
+
+[node name="vs_check" type="CheckButton" parent="m/settings"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_pressed = true
+
+[node name="fs_label" type="Label" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SETTING_FULLSCREEN"
+
+[node name="fs_check" type="CheckButton" parent="m/settings"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="lang_label" type="Label" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SETTING_LANG"
+
+[node name="lang_opt" type="OptionButton" parent="m/settings"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+item_count = 2
+selected = 0
+popup/item_0/text = "ENGLISH"
+popup/item_0/id = 0
+popup/item_1/text = "РУССКИЙ"
+popup/item_1/id = 1
+
+[node name="reflection_label" type="Label" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SETTING_REFLECTION"
+
+[node name="reflection_check" type="CheckButton" parent="m/settings"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_pressed = true
+
+[node name="back" type="Button" parent="m/settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BUTTON_BACK"
+
+[node name="boot" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_1ae8h")
+expand_mode = 1
+stretch_mode = 6
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="button_up" from="m/main/play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="m/main/settings" to="." method="_on_settings_button_up"]
+[connection signal="button_up" from="m/main/quit" to="." method="_on_quit_button_up"]
+[connection signal="value_changed" from="m/settings/sens_slider" to="." method="_on_sens_slider_value_changed"]
+[connection signal="value_changed" from="m/settings/vol_slider" to="." method="_on_vol_slider_value_changed"]
+[connection signal="toggled" from="m/settings/vs_check" to="." method="_on_vs_check_toggled"]
+[connection signal="toggled" from="m/settings/fs_check" to="." method="_on_fs_check_toggled"]
+[connection signal="item_selected" from="m/settings/lang_opt" to="." method="_on_lang_opt_item_selected"]
+[connection signal="toggled" from="m/settings/reflection_check" to="." method="_on_reflection_check_toggled"]
+[connection signal="button_up" from="m/settings/back" to="." method="_on_back_button_up"]
